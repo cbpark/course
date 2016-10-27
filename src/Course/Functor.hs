@@ -36,7 +36,7 @@ infixl 4 <$>
 -- Id 3
 instance Functor Id where
     (<$>) :: (a -> b) -> Id a -> Id b
-    (<$>) f (Id x) = Id (f x)
+    (<$>) = mapId
 
 -- | Maps a function on the List functor.
 --
@@ -47,8 +47,7 @@ instance Functor Id where
 -- [2,3,4]
 instance Functor List where
     (<$>) :: (a -> b) -> List a -> List b
-    _ <$> Nil     = Nil
-    f <$> (x:.xs) = f x :. (f <$> xs)
+    (<$>) = map
 
 -- | Maps a function on the Optional functor.
 --
@@ -59,8 +58,7 @@ instance Functor List where
 -- Full 3
 instance Functor Optional where
     (<$>) :: (a -> b) -> Optional a -> Optional b
-    _ <$> Empty = Empty
-    f <$> Full x = Full (f x)
+    (<$>) = mapOptional
 
 -- | Maps a function on the reader ((->) t) functor.
 --
@@ -95,7 +93,7 @@ instance Functor ((->) t) where
 -- >>> void (+10) 5
 -- ()
 void :: Functor f => f a -> f ()
-void = (() <$)
+void = (<$) ()
 
 -----------------------
 -- SUPPORT LIBRARIES --
