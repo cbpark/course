@@ -27,7 +27,7 @@ import qualified Prelude            as P ((=<<))
 --   `∀f g x. g =<< (f =<< x) ≅ ((g =<<) . f) =<< x`
 class Applicative f => Monad f where
     -- Pronounced, bind.
-  (=<<) :: (a -> f b) -> f a -> f b
+    (=<<) :: (a -> f b) -> f a -> f b
 
 infixr 1 =<<
 
