@@ -1,15 +1,14 @@
-{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE NoImplicitPrelude   #-}
+{-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE OverloadedStrings #-}
 
 module Course.Anagrams where
 
-import Course.Core
-import Course.List
-import Course.Functor
+import           Course.Core
+import           Course.Functor
+import           Course.List
 
 {-
-
 Functions you will need
 --
 * fmap :: (a -> b) -> IO a -> IO b
@@ -25,20 +24,11 @@ Functions that might help
 
 -}
 
-
 -- Return all anagrams of the given string
 -- that appear in the given dictionary file.
-anagrams ::
-  Chars
-  -> Filename
-  -> IO (List Chars)
-anagrams =
-  error "todo: Course.Anagrams#anagrams"
+anagrams :: Chars -> Filename -> IO (List Chars)
+anagrams name = (<$>) (intersectBy equalIgnoringCase (permutations name) . lines) . readFile
 
 -- Compare two strings for equality, ignoring case
-equalIgnoringCase ::
-  Chars
-  -> Chars
-  -> Bool
-equalIgnoringCase =
-  error "todo: Course.Anagrams#equalIgnoringCase"
+equalIgnoringCase :: Chars -> Chars -> Bool
+equalIgnoringCase = (==) `on` map toLower
